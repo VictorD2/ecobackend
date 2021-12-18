@@ -3,7 +3,7 @@ import path from "path";
 import { connect } from "../database";
 
 export async function indexRoute(req: Request, res: Response) {
-  return res.sendFile(path.join(__dirname + "/.." + "/public/index.html"));
+  return res.sendFile(path.join(__dirname + "/.." + "/public/build/index.html"));
 }
 // export async function getPosts(req: Request, res: Response): Promise<Response> {
 //   const conn = await connect();

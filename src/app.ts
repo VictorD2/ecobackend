@@ -6,8 +6,11 @@ import path from "path";
 import session from "express-session";
 import MySQLStore from "express-mysql-session";
 import { connect } from "./database";
-
+import "./lib/passport.ts";
 //Routes
+import ProductoRoutes from "./routes/producto.routes";
+import CategoriaRoutes from "./routes/categoria.routes";
+import AuthRoutes from "./routes/auth.routes";
 import IndexRoutes from "./routes/index.routes";
 
 export class App {
@@ -30,6 +33,7 @@ export class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.static(path.join(__dirname, "/public")));
+    this.app.use(express.static(path.join(__dirname, "/public/build")));
     this.app.use(
       cors({
         origin: process.env.API, //Asi el frontend puede hacer peticiones
@@ -45,6 +49,9 @@ export class App {
   }
 
   routes() {
+    this.app.use("/api/v0/categorias", CategoriaRoutes);
+    this.app.use("/api/v0/productos", ProductoRoutes);
+    this.app.use(AuthRoutes);
     this.app.use(IndexRoutes);
   }
 
